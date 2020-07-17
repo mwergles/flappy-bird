@@ -32,4 +32,8 @@ export default class Player {
     this.speed += this.gravity
     this.destinationY += this.speed
   }
+
+  jump () {
+    this.destinationY = 60
+  }
 }

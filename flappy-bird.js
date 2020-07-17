@@ -1,3 +1,5 @@
+import state from './src/state/state.js'
+
 import Player from './src/objects/Player.js'
 import Background from './src/objects/Background.js'
 import SplashScreenBanner from './src/objects/SplashScreenBanner.js'
@@ -23,22 +25,20 @@ const splashScreen = new SplashScreen(player, background, floor, splashScreenBan
 const mainScreen = new MainScreen(player, background, floor)
 
 const screens = {
-  splashScreen,
-  mainScreen
+  SplashScreen: splashScreen,
+  MainScreen: mainScreen
 }
 
-let currentScreen = 'splashScreen'
-
 function main () {
+  const { currentScreen } = state.state
   screens[currentScreen].render()
 
   requestAnimationFrame(main)
 }
 
-window.addEventListener('click', () => {
-  if (currentScreen === 'splashScreen') {
-    currentScreen = 'mainScreen'
-  }
+window.addEventListener('onLoadNextScreen', ev => {
+  const { fromScreen } = ev.detail
+  state.actions.loadNextScreen({ fromScreen })
 })
 
 main()

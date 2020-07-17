@@ -4,11 +4,24 @@ export default class SplashScreen {
     this.background = background
     this.floor = floor
     this.splashScreenBanner = splashScreenBanner
+
+    this.bindEvents()
   }
+
   render () {
     this.background.render()
     this.splashScreenBanner.render()
     this.floor.render()
     this.player.render()
+  }
+
+  click () {
+    const detail = { fromScreen: 'SplashScreen' }
+    const event = new CustomEvent('onLoadNextScreen', { detail })
+    window.dispatchEvent(event)
+  }
+
+  bindEvents () {
+    window.addEventListener('click', this.click)
   }
 }
