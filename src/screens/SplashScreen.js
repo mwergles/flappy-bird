@@ -13,6 +13,7 @@ export default class SplashScreen {
     this.splashScreenBanner.render()
     this.floor.render()
     this.player.render()
+    this.floor.update()
   }
 
   click () {

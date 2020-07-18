@@ -16,10 +16,15 @@ sprites.src = './images/sprites.png'
 const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
 
-const splashScreenBanner = new SplashScreenBanner(sprites, canvas, ctx)
-const player = new Player(sprites, ctx)
-const background = new Background(sprites, canvas, ctx)
-const floor = new Floor(sprites, canvas, ctx)
+const canvasDimensions = {
+  width: canvas.width,
+  height: canvas.height
+}
+
+const splashScreenBanner = new SplashScreenBanner(sprites, canvasDimensions, ctx)
+const player = new Player(sprites, ctx, state)
+const background = new Background(sprites, canvasDimensions, ctx)
+const floor = new Floor(sprites, canvasDimensions, ctx)
 
 const splashScreen = new SplashScreen(player, background, floor, splashScreenBanner)
 const mainScreen = new MainScreen(player, background, floor)
@@ -29,9 +34,14 @@ const screens = {
   MainScreen: mainScreen
 }
 
-function main () {
+// const sleep = () => new Promise(resolve => setTimeout(resolve, 100))
+
+async function main () {
   const { currentScreen } = state.state
   screens[currentScreen].render()
+
+  state.actions.incrementFrame()
+  // await sleep()
 
   requestAnimationFrame(main)
 }
@@ -39,6 +49,11 @@ function main () {
 window.addEventListener('onLoadNextScreen', ev => {
   const { fromScreen } = ev.detail
   state.actions.loadNextScreen({ fromScreen })
+})
+
+window.addEventListener('onGameOver', ev => {
+  console.log('Game Over!')
+  state.actions.setCurrentScreen('SplashScreen')
 })
 
 main()

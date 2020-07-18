@@ -1,11 +1,13 @@
 export default class Floor {
-  constructor (sprites, canvas, ctx) {
+  constructor (sprites, canvasDimensions, ctx) {
     this.sourceX = 0
     this.sourceY = 610
     this.sourceW = 224
     this.sourceH = 112
     this.destinationX = 0
-    this.destinationY = canvas.height - 112
+    this.destinationY = canvasDimensions.height - this.sourceH
+
+    this.speed = 1
 
     this.sprites = sprites
     this.ctx = ctx
@@ -35,5 +37,11 @@ export default class Floor {
       this.sourceW,
       this.sourceH
     )
+  }
+
+  update () {
+    const minSize = this.sourceW / 2
+    const movement = this.destinationX - this.speed
+    this.destinationX = movement % minSize
   }
 }
