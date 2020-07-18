@@ -8,7 +8,10 @@ export default class MainScreen {
     this.bottom = bottom
     this.state = state
 
+    this.scoreFrameInterval = 50
+
     this.addListeners()
+    this.isRunning = true
   }
 
   render () {
@@ -22,8 +25,13 @@ export default class MainScreen {
       this.bottom.onCollision()
       this.pipes.onCollision()
 
-      const event = new CustomEvent('onGameOver')
-      window.dispatchEvent(event)
+      if (this.isRunning) {
+        const event = new CustomEvent('onGameOver')
+        window.dispatchEvent(event)
+
+        this.removeListeners()
+        this.isRunning = false
+      }
     }
 
     this.player.update()
@@ -37,6 +45,10 @@ export default class MainScreen {
 
   onFrameChange (ev) {
     const { currentFrame } = ev.detail
+
+    if ((currentFrame % this.scoreFrameInterval) === 0) {
+      this.state.actions.incrementScore()
+    }
 
     this.player.setCurrentFrame(currentFrame)
     this.pipes.setCurrentFrame(currentFrame)
@@ -58,5 +70,9 @@ export default class MainScreen {
     for (const [type, handler] of this.listeners) {
       window.removeEventListener(type, handler)
     }
+  }
+
+  destroy () {
+    this.removeListeners()
   }
 }

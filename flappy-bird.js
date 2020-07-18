@@ -54,8 +54,13 @@ window.addEventListener('onLoadNextScreen', ev => {
 })
 
 window.addEventListener('onGameOver', ev => {
-  console.log('Game Over!')
-  // state.actions.setCurrentScreen('SplashScreen')
+  const scoreFeedback = `Game Over! Your score is: ${state.state.score}!`
+  const scoreElement = document.querySelector('.score')
+
+  scoreElement.textContent = scoreFeedback
+
+  console.log(scoreFeedback)
+  // state.actions.setCurrentScreen(screen)
 })
 
 main()
