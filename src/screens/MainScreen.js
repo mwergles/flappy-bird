@@ -1,10 +1,11 @@
 export default class MainScreen {
   listeners = []
 
-  constructor (player, background, floor, state) {
+  constructor (player, background, pipes, bottom, state) {
     this.player = player
     this.background = background
-    this.floor = floor
+    this.pipes = pipes
+    this.bottom = bottom
     this.state = state
 
     this.addListeners()
@@ -12,22 +13,33 @@ export default class MainScreen {
 
   render () {
     this.background.render()
-    this.floor.render()
+    this.pipes.render()
+    this.bottom.render()
     this.player.render()
 
-    if (this.player.hasCollided(this.floor)) {
+    if (this.bottom.hasCollided(this.player) || this.pipes.hasCollided(this.player)) {
       this.player.onCollision()
+      this.bottom.onCollision()
+      this.pipes.onCollision()
 
       const event = new CustomEvent('onGameOver')
       window.dispatchEvent(event)
     }
 
     this.player.update()
-    this.floor.update()
+    this.bottom.update()
+    this.pipes.update()
   }
 
   click () {
     this.player.jump()
+  }
+
+  onFrameChange (ev) {
+    const { currentFrame } = ev.detail
+
+    this.player.setCurrentFrame(currentFrame)
+    this.pipes.setCurrentFrame(currentFrame)
   }
 
   addListeners () {
@@ -36,6 +48,10 @@ export default class MainScreen {
     const clickHandler = () => this.click()
     window.addEventListener('click', clickHandler)
     this.listeners.push(['click', clickHandler])
+
+    const onFrameChangeHandler = (ev) => this.onFrameChange(ev)
+    window.addEventListener('onFrameChange', onFrameChangeHandler)
+    this.listeners.push(['onFrameChange', onFrameChangeHandler])
   }
 
   removeListeners () {

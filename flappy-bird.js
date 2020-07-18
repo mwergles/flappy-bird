@@ -2,8 +2,9 @@ import state from './src/state/state.js'
 
 import Player from './src/objects/Player.js'
 import Background from './src/objects/Background.js'
+import Pipes from './src/objects/Pipes.js'
 import SplashScreenBanner from './src/objects/SplashScreenBanner.js'
-import Floor from './src/objects/Floor.js'
+import Bottom from './src/objects/Bottom.js'
 
 import SplashScreen from './src/screens/SplashScreen.js'
 import MainScreen from './src/screens/MainScreen.js'
@@ -24,10 +25,11 @@ const canvasDimensions = {
 const splashScreenBanner = new SplashScreenBanner(sprites, canvasDimensions, ctx)
 const player = new Player(sprites, ctx, state)
 const background = new Background(sprites, canvasDimensions, ctx)
-const floor = new Floor(sprites, canvasDimensions, ctx)
+const pipes = new Pipes(sprites, canvasDimensions, ctx,)
+const bottom = new Bottom(sprites, canvasDimensions, ctx)
 
-const splashScreen = new SplashScreen(player, background, floor, splashScreenBanner)
-const mainScreen = new MainScreen(player, background, floor)
+const splashScreen = new SplashScreen(player, background, bottom, splashScreenBanner)
+const mainScreen = new MainScreen(player, background, pipes, bottom, state)
 
 const screens = {
   SplashScreen: splashScreen,
@@ -53,7 +55,7 @@ window.addEventListener('onLoadNextScreen', ev => {
 
 window.addEventListener('onGameOver', ev => {
   console.log('Game Over!')
-  state.actions.setCurrentScreen('SplashScreen')
+  // state.actions.setCurrentScreen('SplashScreen')
 })
 
 main()

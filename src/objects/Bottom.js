@@ -1,5 +1,8 @@
-export default class Floor {
+export default class Bottom {
   constructor (sprites, canvasDimensions, ctx) {
+    this.sprites = sprites
+    this.ctx = ctx
+
     this.sourceX = 0
     this.sourceY = 610
     this.sourceW = 224
@@ -8,9 +11,7 @@ export default class Floor {
     this.destinationY = canvasDimensions.height - this.sourceH
 
     this.speed = 1
-
-    this.sprites = sprites
-    this.ctx = ctx
+    this.isStopped = false
   }
 
   render () {
@@ -40,8 +41,22 @@ export default class Floor {
   }
 
   update () {
+    if (this.isStopped) {
+      return
+    }
+
     const minSize = this.sourceW / 2
     const movement = this.destinationX - this.speed
     this.destinationX = movement % minSize
+  }
+
+  hasCollided (object) {
+    const objectY = object.destinationY + object.sourceH
+
+    return objectY >= this.destinationY
+  }
+
+  onCollision () {
+    this.isStopped = true
   }
 }

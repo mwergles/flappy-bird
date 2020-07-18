@@ -1,5 +1,8 @@
 export default class Player {
-  constructor (sprites, ctx, state) {
+  constructor (sprites, ctx) {
+    this.sprites = sprites
+    this.ctx = ctx
+
     this.sourceW =  33
     this.sourceH =  24
     this.destinationX =  10
@@ -17,12 +20,9 @@ export default class Player {
       { sourceX: 0, sourceY: 26 }
     ]
 
+    this.currentFrame = 0
     this.frameInterval = 10
     this.currentSpriteFrame = 0
-
-    this.sprites = sprites
-    this.ctx = ctx
-    this.state = state
 
     this.onCollisionSound = new Audio('../../sound/collision.wav')
   }
@@ -60,12 +60,6 @@ export default class Player {
     this.isStopped = true
   }
 
-  hasCollided (object) {
-    const playerY = this.destinationY + this.sourceH
-
-    return playerY >= object.destinationY
-  }
-
   onCollision () {
     if (!this.isStopped) {
       this.onCollisionSound.play()
@@ -75,9 +69,11 @@ export default class Player {
   }
 
   updateFrame () {
-    const { currentFrame } = this.state.state
+    if (this.isStopped) {
+      return
+    }
 
-    if (currentFrame % this.frameInterval === 0) {
+    if (this.currentFrame % this.frameInterval === 0) {
       this.currentSpriteFrame = ++this.currentSpriteFrame % this.playerSprites.length
     }
   }
@@ -86,5 +82,9 @@ export default class Player {
     this.updateFrame()
 
     return this.playerSprites[this.currentSpriteFrame]
+  }
+
+  setCurrentFrame (currentFrame) {
+    this.currentFrame = currentFrame
   }
 }

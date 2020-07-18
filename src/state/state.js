@@ -15,7 +15,10 @@ const actions = {
   },
   incrementFrame () {
     state.currentFrame++
-  }
+
+    const detail = { currentFrame: state.currentFrame }
+    window.dispatchEvent(new CustomEvent('onFrameChange', { detail }))
+  },
 }
 
 export default {

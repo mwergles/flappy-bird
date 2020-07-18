@@ -2,16 +2,16 @@ export default class Background {
   static backgroundColor = '#70c5ce'
 
   constructor (sprites, canvasDimensions, ctx) {
+    this.sprites = sprites
+    this.canvasDimensions = canvasDimensions
+    this.ctx = ctx
+
     this.sourceX =  390
     this.sourceY =  0
     this.sourceW =  275
     this.sourceH =  204
     this.destinationX =  0
     this.destinationY =  canvasDimensions.height - this.sourceH
-
-    this.sprites = sprites
-    this.canvasDimensions = canvasDimensions
-    this.ctx = ctx
   }
 
   render () {
