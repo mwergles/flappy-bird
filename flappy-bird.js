@@ -36,14 +36,11 @@ const screens = {
   MainScreen: mainScreen
 }
 
-// const sleep = () => new Promise(resolve => setTimeout(resolve, 100))
-
-async function main () {
+function main () {
   const { currentScreen } = state.state
-  screens[currentScreen].render()
 
+  screens[currentScreen].render()
   state.actions.incrementFrame()
-  // await sleep()
 
   requestAnimationFrame(main)
 }

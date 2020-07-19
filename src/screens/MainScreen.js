@@ -1,12 +1,12 @@
 export default class MainScreen {
-  listeners = []
-
   constructor (player, background, pipes, bottom, state) {
     this.player = player
     this.background = background
     this.pipes = pipes
     this.bottom = bottom
     this.state = state
+
+    this.listeners = []
 
     this.scoreFrameInterval = 50
 

@@ -1,11 +1,10 @@
 export default class Background {
-  static backgroundColor = '#70c5ce'
-
   constructor (sprites, canvasDimensions, ctx) {
     this.sprites = sprites
     this.canvasDimensions = canvasDimensions
     this.ctx = ctx
 
+    this.backgroundColor = '#70c5ce'
     this.sourceX =  390
     this.sourceY =  0
     this.sourceW =  275
@@ -15,7 +14,7 @@ export default class Background {
   }
 
   render () {
-    this.ctx.fillStyle = Background.backgroundColor
+    this.ctx.fillStyle = this.backgroundColor
     this.ctx.fillRect(0, 0, this.canvasDimensions.width, this.canvasDimensions.height)
 
     this.ctx.drawImage(
