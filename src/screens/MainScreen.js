@@ -48,7 +48,7 @@ export default class MainScreen {
     const { currentFrame } = ev.detail
 
     if ((currentFrame % this.scoreFrameInterval) === 0) {
-      this.onScoreSound.play()
+      // this.onScoreSound.play()
       this.state.actions.incrementScore()
     }
 
