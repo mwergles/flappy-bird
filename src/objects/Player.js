@@ -25,6 +25,7 @@ export default class Player {
     this.currentSpriteFrame = 0
 
     this.onCollisionSound = new Audio('../../sound/collision.wav')
+    this.onJumpSound = new Audio('../../sound/jump.wav')
   }
 
   render () {
@@ -53,6 +54,7 @@ export default class Player {
   }
 
   jump () {
+    this.onJumpSound.play()
     this.speed = this.jumpSpeed
   }
 

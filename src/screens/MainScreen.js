@@ -8,7 +8,8 @@ export default class MainScreen {
 
     this.listeners = []
 
-    this.scoreFrameInterval = 50
+    this.scoreFrameInterval = 230
+    this.onScoreSound = new Audio('../../sound/score.wav')
 
     this.addListeners()
     this.isRunning = true
@@ -47,6 +48,7 @@ export default class MainScreen {
     const { currentFrame } = ev.detail
 
     if ((currentFrame % this.scoreFrameInterval) === 0) {
+      this.onScoreSound.play()
       this.state.actions.incrementScore()
     }
 
